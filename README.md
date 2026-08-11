@@ -1,10 +1,10 @@
 # Waveshare Car Clock
 
-Modern offline touchscreen car clock for the **Waveshare ESP32-S3 Touch LCD 2.1** with its 480 × 480 round display and onboard **PCF85063 RTC**.
+Jaguar-themed offline touchscreen car clock for the **Waveshare ESP32-S3 Touch LCD 2.1** with 480 × 480 round display and onboard **PCF85063 RTC**.
 
-## Current stable build
+## Current build
 
-**v2.2 — tested and working on the target hardware**
+**v5.0 — Project Leaper**
 
 The working application is in:
 
@@ -12,34 +12,30 @@ The working application is in:
 CarClock_Modern/
 ```
 
-Open this sketch in Arduino IDE:
+Open:
 
 ```text
 CarClock_Modern/CarClock_Modern.ino
 ```
 
-Arduino requires the sketch folder and main `.ino` filename to match.
+## V5 fix
+
+V4 could switch from digital to analogue, but a short tap back to digital could leave the display blank.
+
+V5 changes the face-switching routine so the selected face is explicitly brought to the LVGL foreground and invalidated for a clean redraw.
 
 ## Features
 
-- Modern dark dashboard display
-- Large 24-hour digital clock
-- Analogue clock face
-- Tap anywhere to switch digital ↔ analogue
-- Full-screen touch layer on both clock faces
-- Long press to open time settings
+- Large 24-hour digital clock for in-car visibility
+- Jaguar-red styling and accents
+- Analogue clock face with 12, 3, 6 and 9
+- Red second hand
+- Jaguar startup splash/logo
+- Quick tap toggles digital ↔ analogue
+- Long press opens clock/date settings
 - Onboard PCF85063 RTC support
-- Battery-voltage display
 - Fully offline operation — no Wi-Fi required
-- LVGL 9.5 compatible
-- Uses `LV_FONT_DEFAULT`, avoiding disabled Montserrat font errors
-
-## Controls
-
-- **Quick tap anywhere:** change clock face
-- **Long press:** open time setting controls
-- **SAVE:** write the selected time to the RTC
-- **CANCEL:** return without changing the RTC
+- LVGL 8-compatible implementation used by the Waveshare example
 
 ## Hardware
 
@@ -50,24 +46,8 @@ Arduino requires the sketch folder and main `.ino` filename to match.
 
 For vehicle installation, use a protected, regulated automotive **12 V to 5 V USB supply**. Do not connect the ESP32 board directly to the vehicle's 12 V electrical system.
 
-## Arduino setup
+## Version history
 
-Use the board package, LVGL configuration and libraries from the official Waveshare `LVGL_Arduino` example that successfully runs on the display.
-
-Recommended board selection:
-
-```text
-Waveshare ESP32-S3-Touch-LCD-2.1
-```
-
-Keep all Waveshare `.cpp` and `.h` driver files in the same `CarClock_Modern` sketch folder.
-
-## v2.2 touch fix
-
-Earlier builds could switch from digital to analogue but then appear stuck because analogue clock objects intercepted touch events.
-
-v2.2 places a transparent clickable object over the entire 480 × 480 face. Clock hands, labels and markers can no longer block taps, so switching works reliably in both directions.
-
-## Status
-
-Confirmed working on Stu's physical Waveshare display on 30 July 2026.
+- **v5.0** — fixes analogue → digital blank screen and establishes the uploaded V4 Project Leaper build as the source baseline
+- **v4.0** — Project Leaper styling, large digital display, Jaguar splash/logo and cleaner analogue face
+- **v2.2** — earlier tested digital/analogue UI and touch-layer fix
