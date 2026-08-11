@@ -398,27 +398,24 @@ void create_digital_screen(lv_obj_t *parent) {
   time_label = lv_label_create(digital_screen);
   lv_label_set_text(time_label, "00:00");
   style_label(time_label, 0xFFFFFF);
-  // V6: 1800 (~7x) caused the digital face to fail to render reliably.
-  // 900 is the last known-good clock scale on this hardware.
-  lv_obj_set_style_transform_zoom(time_label, 900, 0);
-  lv_obj_set_style_transform_pivot_x(time_label, 35, 0);
-  lv_obj_set_style_transform_pivot_y(time_label, 7, 0);
+  // V7 diagnostic: render the digital clock with no transform/zoom.
+  // This isolates the digital-label rendering fault from LVGL transforms.
+  lv_obj_set_width(time_label, 220);
+  lv_obj_set_style_text_align(time_label, LV_TEXT_ALIGN_CENTER, 0);
   lv_obj_align(time_label, LV_ALIGN_CENTER, 0, -52);
 
   day_label = lv_label_create(digital_screen);
   lv_label_set_text(day_label, "THURSDAY");
   style_label(day_label, 0xD71920);
-  lv_obj_set_style_transform_zoom(day_label, 610, 0);
-  lv_obj_set_style_transform_pivot_x(day_label, 32, 0);
-  lv_obj_set_style_transform_pivot_y(day_label, 7, 0);
+  lv_obj_set_width(day_label, 220);
+  lv_obj_set_style_text_align(day_label, LV_TEXT_ALIGN_CENTER, 0);
   lv_obj_align(day_label, LV_ALIGN_CENTER, 0, 73);
 
   date_label = lv_label_create(digital_screen);
   lv_label_set_text(date_label, "30 JULY");
   style_label(date_label, 0xB8C0C8);
-  lv_obj_set_style_transform_zoom(date_label, 500, 0);
-  lv_obj_set_style_transform_pivot_x(date_label, 28, 0);
-  lv_obj_set_style_transform_pivot_y(date_label, 7, 0);
+  lv_obj_set_width(date_label, 220);
+  lv_obj_set_style_text_align(date_label, LV_TEXT_ALIGN_CENTER, 0);
   lv_obj_align(date_label, LV_ALIGN_CENTER, 0, 126);
 
   add_full_screen_touch_layer(digital_screen);
