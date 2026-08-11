@@ -85,7 +85,6 @@ int days_in_month(int month, int year) {
 }
 
 int calculate_weekday(int year, int month, int day) {
-  // Sakamoto algorithm: returns 0=Sunday through 6=Saturday.
   static const int offsets[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
   if (month < 3) year -= 1;
   return (year + year / 4 - year / 100 + year / 400 + offsets[month - 1] + day) % 7;
@@ -283,7 +282,6 @@ void open_settings() {
   update_settings_labels();
 }
 
-
 void splash_fade_done(lv_anim_t *) {
   if (splash_screen != nullptr) {
     lv_obj_del(splash_screen);
@@ -340,11 +338,6 @@ void create_startup_splash(lv_obj_t *parent) {
 void show_face(ClockFace face) {
   current_face = face;
 
-  // V5: explicitly control both visibility and z-order.
-  // On the round Waveshare display the analogue face can remain above the
-  // digital face in LVGL's object stack after a tap, leaving a black screen
-  // even though the digital face has been unhidden. Bringing the selected
-  // face to the foreground and invalidating it forces a clean redraw.
   if (face == FACE_DIGITAL) {
     lv_obj_add_flag(analogue_screen, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_flag(digital_screen, LV_OBJ_FLAG_HIDDEN);
@@ -393,8 +386,6 @@ void create_digital_screen(lv_obj_t *parent) {
   lv_obj_set_pos(digital_screen, 0, 0);
   set_screen_background(digital_screen);
 
-  // Subtle Jaguar-red outer ring. It frames the round display without
-  // competing with the time.
   lv_obj_t *ring = lv_obj_create(digital_screen);
   lv_obj_set_size(ring, 438, 438);
   lv_obj_center(ring);
@@ -404,12 +395,12 @@ void create_digital_screen(lv_obj_t *parent) {
   lv_obj_set_style_border_color(ring, lv_color_hex(0x8E1118), 0);
   lv_obj_clear_flag(ring, LV_OBJ_FLAG_SCROLLABLE);
 
-  // The time is deliberately enormous for quick, safe glances in the car.
-  // LVGL's transform zoom uses 256 as 100%, so 1800 is approximately 7x.
   time_label = lv_label_create(digital_screen);
   lv_label_set_text(time_label, "00:00");
   style_label(time_label, 0xFFFFFF);
-  lv_obj_set_style_transform_zoom(time_label, 1800, 0);
+  // V6: 1800 (~7x) caused the digital face to fail to render reliably.
+  // 900 is the last known-good clock scale on this hardware.
+  lv_obj_set_style_transform_zoom(time_label, 900, 0);
   lv_obj_set_style_transform_pivot_x(time_label, 35, 0);
   lv_obj_set_style_transform_pivot_y(time_label, 7, 0);
   lv_obj_align(time_label, LV_ALIGN_CENTER, 0, -52);
