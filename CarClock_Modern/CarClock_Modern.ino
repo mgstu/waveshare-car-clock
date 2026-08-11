@@ -1,5 +1,5 @@
 /*
- * Waveshare ESP32-S3 Touch LCD 2.1 - Offline Car Clock v5.0
+ * Waveshare ESP32-S3 Touch LCD 2.1 - Offline Car Clock v6.0
  *
  * Tap the screen to switch between digital and analogue faces.
  * Hold the screen to open the time-setting panel.
