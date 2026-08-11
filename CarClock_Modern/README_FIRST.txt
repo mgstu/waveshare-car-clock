@@ -1,12 +1,20 @@
-WAVESHARE CAR CLOCK v7.0 - PROJECT LEAPER DIAGNOSTIC
-=====================================================
+WAVESHARE CAR CLOCK v8.0 - PROJECT LEAPER
+==========================================
 
-Purpose of v7.0:
-- Diagnose the missing digital text while the red digital ring still renders.
-- Removes ALL LVGL transform/zoom operations from the three digital labels only.
-- Digital time, weekday and date use plain native-size LVGL labels.
-- Keeps analogue face, Jaguar red ring, touch switching, splash and settings unchanged.
+V8 replaces the unreliable transform-scaled digital font with a large native
+seven-segment HH:MM display drawn from LVGL objects.
 
-Expected result:
-- Digital text will be smaller than desired, but it should be plainly visible.
-- If visible, the fault is confirmed to be the transformed/scaled digital labels, and the next build can use real larger LVGL fonts instead of transform zoom.
+Changes in v8.0:
+- Large, crisp HH:MM digital clock without any font transform/zoom
+- White seven-segment digits with Jaguar-red colon
+- Keeps the Jaguar-red outer ring
+- Keeps normal unscaled weekday and date labels
+- Keeps the analogue face, Jaguar splash, settings and tap switching
+- Retains the V5 foreground/redraw switching safeguard
+
+Reason:
+- V7 proved the digital screen and RTC were working correctly
+- The digital labels only disappeared when transform scaling was applied
+- V8 avoids the problematic font-transform path completely
+
+Open CarClock_Modern.ino in Arduino IDE and upload as before.
